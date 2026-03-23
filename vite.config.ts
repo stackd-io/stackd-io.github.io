@@ -5,9 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    // Required for GitHub Pages project-page repos so asset URLs are rooted
-    // at /stackd.github.io/ instead of /.
-    base: '/stackd.github.io/',
+    base: '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
