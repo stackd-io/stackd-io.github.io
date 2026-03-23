@@ -26,7 +26,7 @@ export const Hero = () => {
               transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="text-lg lg:text-xl leading-relaxed font-medium max-w-md"
             >
-              We are an elite outsourcing team of 3 full-stack developers and 1 QA engineer. We architect, build, and scale high-performance web applications, automations, and Web3 solutions.
+              Anyone can ship code. We ship products that work.<br /><br />A focused team of full-stack developers and a QA engineer — we own the entire journey, from architecture to deployment. High-performance web apps, automations, and Web3 solutions, built to last.
             </motion.p>
             <motion.div
               initial={{ opacity: 0 }}
