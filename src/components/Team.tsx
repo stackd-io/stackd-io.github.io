@@ -10,9 +10,9 @@ const team = [
     website: 'https://glendell03.github.io/',
   },
   {
-    name: 'Sam Chen',
+    name: 'Gary Lloyd Senoc',
     role: 'Full Stack Dev',
-    image: 'https://picsum.photos/seed/sam/800/800?blur=1'
+    image: '/images/gary.webp',
   },
   {
     name: 'Jordan Lee',
