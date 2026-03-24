@@ -2,34 +2,49 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { TextReveal } from './ui/TextReveal';
 
-const projects = [
+interface Project {
+  title: string;
+  category: string;
+  year: string;
+  color: string;
+  textColor: string;
+  image: string;
+  logo?: string;
+  url?: string;
+  description?: string;
+}
+
+const projects: Project[] = [
   {
-    title: 'Fintech Dashboard',
-    category: 'Web Application',
+    title: 'TransBridge USA',
+    category: 'FinTech Advisory',
     year: '2025',
-    color: '#0A0A0A',
-    textColor: '#F4F4F0',
-    image: 'https://picsum.photos/seed/fintech/1920/1080?blur=2'
+    color: '#2AB8A5',
+    textColor: '#0A0A0A',
+    image: '',
+    logo: 'https://cdn.prod.website-files.com/682759b0ea83109842c09b13/6827633e30236c1adb40f349_Group%201.svg',
+    url: 'https://www.transbridgeusa.com',
+    description: 'MSB licensing, banking access & compliance infrastructure for fintechs entering the U.S. market.'
   },
-  {
-    title: 'AI Content Studio',
-    category: 'AI Integration',
-    year: '2024',
-    color: '#FF3300',
-    textColor: '#F4F4F0',
-    image: 'https://picsum.photos/seed/aistudio/1920/1080?blur=2'
-  },
-  {
-    title: 'DeFi Exchange',
-    category: 'Web3 & Crypto',
-    year: '2024',
-    color: '#0A0A0A',
-    textColor: '#F4F4F0',
-    image: 'https://picsum.photos/seed/defi/1920/1080?blur=2'
-  }
 ];
 
-const Card = ({ i, title, category, year, color, textColor, image, progress, range, targetScale }: any) => {
+interface CardProps {
+  i: number;
+  title: string;
+  category: string;
+  year: string;
+  color: string;
+  textColor: string;
+  image: string;
+  logo?: string;
+  url?: string;
+  description?: string;
+  progress: ReturnType<typeof useScroll>['scrollYProgress'];
+  range: [number, number];
+  targetScale: number;
+}
+
+const Card: React.FC<CardProps> = ({ i, title, category, year, color, textColor, image, logo, url, description, progress, range, targetScale }) => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -46,22 +61,62 @@ const Card = ({ i, title, category, year, color, textColor, image, progress, ran
         className="relative flex flex-col justify-between w-full max-w-[1400px] h-[70vh] rounded-3xl p-8 lg:p-12 origin-top overflow-hidden shadow-2xl"
       >
         <div className="flex justify-between items-start z-10 relative">
-          <h3 className="text-4xl lg:text-6xl font-bold tracking-tighter uppercase max-w-2xl mix-blend-difference text-white">
-            {title}
-          </h3>
-          <div className="text-right font-mono text-sm uppercase tracking-widest mix-blend-difference text-white">
+          {logo ? (
+            <img
+              src={logo}
+              alt={title}
+              className="w-56 lg:w-72 brightness-0"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <h3 className="text-4xl lg:text-6xl font-bold tracking-tighter uppercase max-w-2xl mix-blend-difference text-white">
+              {title}
+            </h3>
+          )}
+          <div
+            className="text-right font-mono text-sm uppercase tracking-widest opacity-60"
+            style={{ color: textColor }}
+          >
             <p>{category}</p>
             <p className="opacity-50">{year}</p>
           </div>
         </div>
+        {(description || url) && (
+          <div className="z-10 relative flex items-end justify-between gap-6">
+            {description && (
+              <p
+                className="font-mono text-sm max-w-md leading-relaxed opacity-60"
+                style={{ color: textColor }}
+              >
+                {description}
+              </p>
+            )}
+            {url && (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 font-mono text-xs uppercase tracking-widest px-4 py-2 rounded-full transition-colors"
+                style={{
+                  color: textColor,
+                  border: `1px solid ${textColor}40`,
+                }}
+              >
+                Visit Site ↗
+              </a>
+            )}
+          </div>
+        )}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <motion.img
-            style={{ scale: imageScale }}
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover opacity-40 grayscale mix-blend-multiply"
-            referrerPolicy="no-referrer"
-          />
+          {!logo && (
+            <motion.img
+              style={{ scale: imageScale }}
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover opacity-40 grayscale mix-blend-multiply"
+              referrerPolicy="no-referrer"
+            />
+          )}
         </div>
       </motion.div>
     </div>
@@ -97,13 +152,21 @@ export const Projects = () => {
         {projects.map((project, i) => {
           const targetScale = 1 - ((projects.length - i) * 0.05);
           return (
-            <Card 
-              key={i} 
-              i={i} 
-              {...project} 
-              progress={scrollYProgress} 
-              range={[i * 0.25, 1]} 
-              targetScale={targetScale} 
+            <Card
+              key={i}
+              i={i}
+              title={project.title}
+              category={project.category}
+              year={project.year}
+              color={project.color}
+              textColor={project.textColor}
+              image={project.image}
+              logo={project.logo}
+              url={project.url}
+              description={project.description}
+              progress={scrollYProgress}
+              range={[i * 0.25, 1]}
+              targetScale={targetScale}
             />
           );
         })}
