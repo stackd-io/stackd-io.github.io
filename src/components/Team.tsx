@@ -20,9 +20,10 @@ const team = [
     image: 'https://picsum.photos/seed/jordan/800/800?blur=1'
   },
   {
-    name: 'Casey Smith',
+    name: 'Josephus Mabanag',
     role: 'QA Engineer',
-    image: 'https://picsum.photos/seed/casey/800/800?blur=1'
+    image: '/images/josephus.webp',
+    objectPosition: 'left'
   }
 ];
 
@@ -58,6 +59,7 @@ export const Team = () => {
                 src={member.image}
                 alt={member.name}
                 className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                style={'objectPosition' in member ? { objectPosition: member.objectPosition } : undefined}
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-[#0A0A0A]/40 group-hover:bg-transparent transition-colors duration-500" />
